@@ -17,10 +17,10 @@ function clipBookInformation() {
       .getElementById("bylineInfo")
       .getElementsByClassName("contributorNameID")
   );
-  console.debug(
+  const newClip =
     contributors.map(c => c.textContent).join(" and ") +
-      ", " +
-      productTitle.textContent.replace('\n', '') +
-      document.getElementById("imgBlkFront").src
-  );
+    ", " +
+    productTitle.textContent.replace("\n", "") +
+    document.getElementById("imgBlkFront").src;
+  navigator.clipboard.writeText(newClip);
 }
