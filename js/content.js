@@ -1,1 +1,3 @@
-console.debug('Ex.Ex. loaded')
+chrome.runtime.onMessage.addListener(message=> {
+    console.debug(message)
+})
