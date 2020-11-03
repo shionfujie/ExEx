@@ -17,10 +17,19 @@ function clipBookInformation() {
       .getElementById("bylineInfo")
       .getElementsByClassName("contributorNameID")
   );
+  var imgSrc = "";
+  var img = document.getElementById("imgBlkFront");
+  if (img === null) {
+    img = document.getElementById("ebooksImgBlkFront");
+  }
+  if (img !== null) {
+    imgSrc = img.src;
+  }
+
   const newClip =
     contributors.map(c => c.textContent).join(" and ") +
     ", " +
     productTitle.textContent.replace("\n", "") +
-    document.getElementById("imgBlkFront").src;
+    imgSrc;
   navigator.clipboard.writeText(newClip);
 }
