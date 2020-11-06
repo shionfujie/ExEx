@@ -30,6 +30,13 @@ function clipBookInformation() {
     contributors.map(c => c.textContent).join(" and ") +
     ", " +
     productTitle.textContent.replace("\n", "") +
-    imgSrc;
+    fullResolutionURL(imgSrc);
   navigator.clipboard.writeText(newClip);
+}
+
+function fullResolutionURL(imgSrc) {
+  if (!imgSrc) return imgSrc
+  const parts = imgSrc.split('.')
+  parts.splice(parts.length - 2, 1)
+  return parts.join('.')
 }
