@@ -36,6 +36,11 @@ function clipBookInformation() {
 
 function fullResolutionURL(imgSrc) {
   if (!imgSrc) return imgSrc
+  // An extracted URL is expected to have the typical format like
+  // https://images-na.ssl-images-amazon.com/images/I/41MGPHqDIxL._SX396_BO1,204,203,200_.jpg
+  // , where the part '._SX396_BO1,204,203,200_' stands for image 
+  // resolution. The following lines straight-forwardly remove 
+  // that part.
   const parts = imgSrc.split('.')
   parts.splice(parts.length - 2, 1)
   return parts.join('.')
