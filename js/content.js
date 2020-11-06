@@ -41,7 +41,6 @@ function fullResolutionURL(imgSrc) {
   // , where the part '._SX396_BO1,204,203,200_' stands for image 
   // resolution. The following lines straight-forwardly remove 
   // that part.
-  const parts = imgSrc.split('.')
-  parts.splice(parts.length - 2, 1)
-  return parts.join('.')
+  const r = /\._SX\d\d\d_...,\d\d\d,\d\d\d,\d\d\d_/
+  return imgSrc.replace(r, '')
 }
