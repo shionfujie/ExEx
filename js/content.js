@@ -19,7 +19,13 @@ function clipBookInformation() {
   if (contributors.length === 0) {
     contributors = Array.from(
       bylineInfo.getElementsByClassName("author notFaded")
-    ).map(author => author.getElementsByTagName("a")[0])
+    )
+      .filter(author =>
+        author
+          .getElementsByClassName("contribution")[0]
+          .textContent.includes("(Author)")
+      )
+      .map(author => author.getElementsByTagName("a")[0]);
   }
   var imgSrc = "";
   var img = document.getElementById("imgBlkFront");
