@@ -12,11 +12,21 @@ function clipBookInformation() {
     console.debug("cannot find book title, perhaps not on a product page?");
     return;
   }
-  const contributors = Array.from(
-    document
-      .getElementById("bylineInfo")
-      .getElementsByClassName("contributorNameID")
+  const bylineInfo = document.getElementById("bylineInfo")
+  var contributors = Array.from(
+    bylineInfo.getElementsByClassName("contributorNameID")
   );
+  if (contributors.length === 0) {
+    contributors = Array.from(
+      bylineInfo.getElementsByClassName("author notFaded")
+    )
+      .filter(author =>
+        author
+          .getElementsByClassName("contribution")[0]
+          .textContent.includes("(Author)")
+      )
+      .map(author => author.getElementsByTagName("a")[0]);
+  }
   var imgSrc = "";
   var img = document.getElementById("imgBlkFront");
   if (img === null) {
