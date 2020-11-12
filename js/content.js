@@ -12,21 +12,20 @@ function clipBookInformation() {
     console.debug("cannot find book title, perhaps not on a product page?");
     return;
   }
-  const bylineInfo = document.getElementById("bylineInfo")
-  var contributors = Array.from(
-    bylineInfo.getElementsByClassName("contributorNameID")
+  const authors = Array.from(
+    document
+      .getElementById("bylineInfo")
+      .getElementsByClassName("author notFaded")
+  ).filter(contributor =>
+    contributor
+      .getElementsByClassName("contribution")[0]
+      .textContent.includes("(Author)")
+  ).map(
+    author =>
+      author.getElementsByClassName("contributorNameID")[0] ||
+      author.getElementsByTagName("a")[0]
   );
-  if (contributors.length === 0) {
-    contributors = Array.from(
-      bylineInfo.getElementsByClassName("author notFaded")
-    )
-      .filter(author =>
-        author
-          .getElementsByClassName("contribution")[0]
-          .textContent.includes("(Author)")
-      )
-      .map(author => author.getElementsByTagName("a")[0]);
-  }
+  
   var imgSrc = "";
   var img = document.getElementById("imgBlkFront");
   if (img === null) {
@@ -37,7 +36,7 @@ function clipBookInformation() {
   }
 
   const newClip =
-    contributors.map(c => c.textContent).join(" and ") +
+    authors.map(c => c.textContent).join(" and ") +
     ", " +
     productTitle.textContent.replace("\n", "") +
     fullResolutionURL(imgSrc);
