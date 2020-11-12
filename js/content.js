@@ -6,6 +6,11 @@ chrome.runtime.onMessage.addListener(message => {
   }
 });
 
+const authorship = {
+  "www.amazon.com": "(Author)",
+  "www.amazon.co.jp": "(著)"
+}
+
 function clipBookInformation() {
   const productTitle = document.getElementById("productTitle");
   if (productTitle === undefined) {
@@ -19,7 +24,7 @@ function clipBookInformation() {
   ).filter(contributor =>
     contributor
       .getElementsByClassName("contribution")[0]
-      .textContent.includes("(Author)")
+      .textContent.includes(authorship[location.hostname])
   ).map(
     author =>
       author.getElementsByClassName("contributorNameID")[0] ||
