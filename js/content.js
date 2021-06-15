@@ -12,25 +12,24 @@ const authorship = {
 }
 
 function clipBookInformation() {
-  const productTitle = document.getElementById("productTitle");
-  if (productTitle === undefined) {
-    console.debug("cannot find book title, perhaps not on a product page?");
-    return;
-  }
-  const authors = Array.from(
-    document
-      .getElementById("bylineInfo")
-      .getElementsByClassName("author notFaded")
-  ).filter(contributor =>
-    contributor
-      .getElementsByClassName("contribution")[0]
-      .textContent.includes(authorship[location.hostname])
-  ).map(
-    author =>
-      author.getElementsByClassName("contributorNameID")[0] ||
-      author.getElementsByTagName("a")[0]
-  );
-  
+  var title = document.title
+  title = title.replace(/\s+[(]\d+[)]/, '')
+  var parts = title.split(': ')
+  if (parts[0].includes('Amazon.')) parts = parts.slice(1)
+  console.log(parts)
+  // Trimming a sequence of number, a probably some serial number
+  // var idx = parts.findIndex(_ => _.match(/^\d+$/))
+  // console.log(idx)
+  // if (idx > -1) {
+  //     return LinkMarkdown(parts.slice(0, idx).join(': '))
+  // }
+
+  // Will probably break if the page is for instance about a book series
+  // Also breaks in the case for best sellers
+  title = parts[0] + ': ' + parts[parts.length - 2]
+
+  title = title.replace(/\s*([(][^)]+[)]|eBook)/g, '')
+
   var imgSrc = "";
   var img = document.getElementById("imgBlkFront");
   if (img === null) {
@@ -40,10 +39,7 @@ function clipBookInformation() {
     imgSrc = img.src;
   }
 
-  const newClip =
-    authors.map(c => c.textContent).join(" and ") +
-    ", " +
-    productTitle.textContent.replace("\n", "") +
+  const newClip = title + '\n\n' +
     fullResolutionURL(imgSrc);
   navigator.clipboard.writeText(newClip);
 }
