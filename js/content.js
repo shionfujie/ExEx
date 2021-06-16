@@ -15,7 +15,7 @@ function clipBookInformation() {
   var title = document.title
   title = title.replace(/\s+[(]\d+[)]/, '')
   var parts = title.split(': ')
-  if (parts[0].includes('Amazon.')) parts = parts.slice(1)
+  parts = parts.filter(part => !part.match(/^(Amazon[.]|\d+)/))
   console.log(parts)
   // Trimming a sequence of number, a probably some serial number
   // var idx = parts.findIndex(_ => _.match(/^\d+$/))
