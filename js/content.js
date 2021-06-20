@@ -8,13 +8,15 @@ chrome.runtime.onMessage.addListener(message => {
 
 const authorship = {
   "www.amazon.com": "(Author)",
-  "www.amazon.co.jp": "(著)"
+  "www.amazon.co.jp": "(著)",
+  "www.amazon.fr": "(Auteur)"
 }
 
 function clipBookInformation() {
   var title = document.title
   title = title.replace(/\s+[(]\d+[)]/, '')
-  var parts = title.split(': ')
+  const sep = location.hostname === "www.amazon.fr" ? " - " : ": "
+  var parts = title.split(sep)
   parts = parts.filter(part => !part.match(/^(Amazon[.]|\d+)/))
   console.log(parts)
   // Trimming a sequence of number, a probably some serial number
@@ -26,7 +28,7 @@ function clipBookInformation() {
 
   // Will probably break if the page is for instance about a book series
   // Also breaks in the case for best sellers
-  title = parts[0] + ': ' + parts[parts.length - 2]
+  title = parts[0] + sep + parts[parts.length - 2]
 
   title = title.replace(/\s*([(][^)]+[)]|eBook)/g, '')
 
